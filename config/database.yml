@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: 1234
+  host: localhost
+
+development:
+  <<: *default
+  database: my_app_development
+
+test:
+  <<: *default
+  database: womall_test
+
+production:
+  <<: *default
+  database: my_app_production
+  username: <%= ENV['WOMALL_DATABASE_USERNAME'] %>
+  password: <%= ENV['WOMALL_DATABASE_PASSWORD'] %>
+  host: <%= ENV['WOMALL_DATABASE_HOST'] %>
+  port: <%= ENV['WOMALL_DATABASE_PORT'] %>
