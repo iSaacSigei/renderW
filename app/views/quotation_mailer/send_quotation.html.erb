@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Quotation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: #18453B;
+            background: -webkit-linear-gradient(to right, #18453B, #00AB66);
+            background: linear-gradient(to right, #18453B, #00AB66);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .total {
+            font-weight: bold;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Your Quotation Has Been Processed</h1>
+    </div>
+    <div class="container">
+        <p>Hello <%= @user.name %>,</p>
+        <p>Your quotation for <%= @order_type.capitalize %> has been generated. Below is a summary:</p>
+
+        <div class="subtitle">Quotation Summary</div>
+        <div class="details">
+            <p><strong>Product Name:</strong> <%= @order.product %></p>
+            <p><strong>Price Per Unit:</strong> $<%= @quotation.price_per_unit %></p>
+            <p><strong>Custom Clearance Fee:</strong> $<%= @quotation.custom_clearance_fee %></p>
+            <p><strong>Logistics Fee:</strong> $<%= @quotation.logistics_fee %></p>
+            <p><strong>Warehouse Fee:</strong> $<%= @quotation.warehouse_fee %></p>
+            <p><strong>Company Commission:</strong> $<%= @quotation.company_commission %></p>
+        </div>
+
+        <div class="total">
+            <p>Total: $<%= @quotation.total %></p>
+        </div>
+
+        <p>You can view the full details of your quotation by clicking the link below:</p>
+        <p><%= link_to 'View Quotation', quotation_url(@quotation) %></p>
+
+        <p>Thank you for choosing our services!</p>
+    </div>
+</body>
+</html>
