@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def ensure_admin_or_current_user
     Rails.logger.info "Current user: #{@current_user.inspect}"
     Rails.logger.info "Requested order ID: #{params[:id]}"
-  
+    
     if @current_user.admin?
       # Admins can access all orders
       Rails.logger.info "Admin user #{@current_user.id} accessing all orders"
@@ -25,20 +25,31 @@ class ApplicationController < ActionController::Base
   
     if params[:id].present?
       # Check if the user owns the specific order
-      if @current_user.import_orders.exists?(params[:id]) || @current_user.export_orders.exists?(params[:id])
+      order_belongs_to_user = @current_user.import_orders.exists?(id: params[:id]) || 
+                              @current_user.export_orders.exists?(id: params[:id])
+  
+      if order_belongs_to_user
         Rails.logger.info "User #{@current_user.id} accessing their order ID: #{params[:id]}"
+        return
+      else
+        Rails.logger.warn "Unauthorized access attempt by user #{@current_user.id} for order ID: #{params[:id]}"
+        render json: { error: 'Unauthorized access' }, status: :unauthorized
         return
       end
     else
-      # For index actions, check if user is authorized to access orders
-      if @current_user.import_orders.any? || @current_user.export_orders.any?
+      # Handle the index action
+      has_orders = @current_user.import_orders.any? || @current_user.export_orders.any?
+  
+      if has_orders
         Rails.logger.info "User #{@current_user.id} accessing their orders"
+        return
+      else
+        # If no orders exist, it might be okay to return an empty list, not unauthorized
+        Rails.logger.info "User #{@current_user.id} has no orders"
         return
       end
     end
-  
-    Rails.logger.warn "Unauthorized access attempt by user #{@current_user.id} for order ID: #{params[:id]}"
-    render json: { error: 'Unauthorized access' }, status: :unauthorized
   end
+  
   
 end

@@ -2,10 +2,8 @@ class User < ApplicationRecord
   has_secure_password
 
   # Relationships
-  has_many :import_orders
-  has_many :export_orders
-  has_many :quotations, through: :import_orders
-  has_many :quotations, through: :export_orders
+  has_many :import_orders, dependent: :destroy
+  has_many :export_orders, dependent: :destroy
 
   # Validations
   validates :email, presence: true, uniqueness: true
@@ -18,5 +16,15 @@ class User < ApplicationRecord
 
   def admin?
     role == 'admin'
+  end
+
+  # Simplified destroy method
+  def destroy_with_associations
+    # Destroy import and export orders
+    import_orders.destroy_all
+    export_orders.destroy_all
+
+    # Finally, destroy the user
+    destroy
   end
 end

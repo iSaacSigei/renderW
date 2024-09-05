@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: MyString
+  job_description: MyText
+  job_requirements: MyText
+  application_deadline: 2024-09-05
+  years_of_experience: 1
+  job_level: MyString
+
+two:
+  category: MyString
+  job_description: MyText
+  job_requirements: MyText
+  application_deadline: 2024-09-05
+  years_of_experience: 1
+  job_level: MyString

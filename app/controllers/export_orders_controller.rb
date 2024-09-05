@@ -1,6 +1,7 @@
 class ExportOrdersController < ApplicationController
   before_action :authenticate_request!
-  before_action :ensure_admin_or_current_user, only: [:index, :show]
+  before_action :set_export_order, only: [:show]
+  before_action :ensure_admin_or_current_user, only: [:index]
 
   # POST /export_orders
   def create
@@ -32,11 +33,18 @@ class ExportOrdersController < ApplicationController
 
   # GET /export_orders/:id
   def show
-    @export_order = ExportOrder.find(params[:id])
-    render json: @export_order.as_json.merge(images: @export_order.images.map { |image| url_for(image) }), status: :ok
+    if @current_user.admin? || @export_order.user == @current_user
+      render json: @export_order.as_json.merge(images: @export_order.images.map { |image| url_for(image) }), status: :ok
+    else
+      render json: { error: 'Not Authorized' }, status: :forbidden
+    end
   end
 
   private
+
+  def set_export_order
+    @export_order = ExportOrder.find(params[:id])
+  end
 
   def export_order_params
     params.require(:export_order).permit(

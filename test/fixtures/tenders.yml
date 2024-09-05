@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tender_number: MyString
+  company: MyString
+  tender_fee: 9.99
+  application_deadline: 2024-09-05
+  category: MyString
+  tender_description: MyText
+
+two:
+  tender_number: MyString
+  company: MyString
+  tender_fee: 9.99
+  application_deadline: 2024-09-05
+  category: MyString
+  tender_description: MyText

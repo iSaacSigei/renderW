@@ -1,6 +1,7 @@
 class ImportOrdersController < ApplicationController
   before_action :authenticate_request!
-  before_action :ensure_admin_or_current_user, only: [:index, :show]
+  before_action :set_import_order, only: [:show]
+  before_action :ensure_admin_or_current_user, only: [:index]
 
   # POST /import_orders
   def create
@@ -14,26 +15,29 @@ class ImportOrdersController < ApplicationController
 
   # GET /import_orders
   def index
-    if @current_user.admin?
-      @import_orders = ImportOrder.all
-    else
-      @import_orders = @current_user.import_orders
-    end
+    @import_orders = @current_user.admin? ? ImportOrder.all : @current_user.import_orders
     render json: @import_orders, status: :ok
   end
 
   # GET /import_orders/:id
   def show
-    @import_order = ImportOrder.find(params[:id])
-    render json: @import_order, status: :ok
+    if @current_user.admin? || @import_order.user == @current_user
+      render json: @import_order, status: :ok
+    else
+      render json: { error: 'Not Authorized' }, status: :forbidden
+    end
   end
 
   private
 
+  def set_import_order
+    @import_order = ImportOrder.find(params[:id])
+  end
+
   def import_order_params
     params.require(:import_order).permit(
-      :import_from, :product, :units, :product_description, 
-      :product_link, :company_name, :address, :city, 
+      :import_from, :product, :units, :product_description,
+      :product_link, :company_name, :address, :city,
       :state_province, :contact, :request_quotation
     )
   end

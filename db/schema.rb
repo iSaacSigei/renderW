@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_28_092014) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_05_052021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_092014) do
     t.index ["user_id"], name: "index_import_orders_on_user_id"
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.string "category"
+    t.text "job_description"
+    t.text "job_requirements"
+    t.date "application_deadline"
+    t.integer "years_of_experience"
+    t.string "job_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "location"
+    t.string "job_title"
+  end
+
   create_table "quotations", force: :cascade do |t|
     t.bigint "export_order_id"
     t.bigint "import_order_id"
@@ -91,6 +104,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_092014) do
     t.integer "admin_user_id"
     t.index ["export_order_id"], name: "index_quotations_on_export_order_id"
     t.index ["import_order_id"], name: "index_quotations_on_import_order_id"
+  end
+
+  create_table "tenders", force: :cascade do |t|
+    t.string "tender_number"
+    t.string "company"
+    t.decimal "tender_fee"
+    t.date "application_deadline"
+    t.string "category"
+    t.text "tender_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,6 +138,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_092014) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "export_orders", "users"
   add_foreign_key "import_orders", "users"
-  add_foreign_key "quotations", "export_orders"
-  add_foreign_key "quotations", "import_orders"
+  add_foreign_key "quotations", "export_orders", on_delete: :cascade
+  add_foreign_key "quotations", "import_orders", on_delete: :cascade
 end

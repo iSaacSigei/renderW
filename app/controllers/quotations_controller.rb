@@ -1,6 +1,6 @@
 class QuotationsController < ApplicationController
-  before_action :authenticate_request!  # Use the existing authentication method
-  before_action :ensure_admin_user, only: [:create]  # Only admins can create quotations
+  before_action :authenticate_request!
+  before_action :ensure_admin_user, only: [:create]
   before_action :find_quotation, only: [:show]
   before_action :ensure_user_owns_quotation, only: [:show]
 
@@ -24,19 +24,25 @@ class QuotationsController < ApplicationController
   
     total_price_per_unit = @quotation.price_per_unit.to_f * units
   
-    # Calculate total including company commission
-    @quotation.total = calculate_total(total_price_per_unit, @quotation)
+    # Calculate subtotal and total including company commission
+    subtotal, total = calculate_total(total_price_per_unit, @quotation)
+    @quotation.total = total
   
     if @quotation.save
       QuotationMailer.send_quotation(@quotation).deliver_later
-      render json: { message: 'Quotation successfully created and email sent', quotation: @quotation }, status: :created
+      render json: { 
+        message: 'Quotation successfully created and email sent', 
+        quotation: @quotation,
+        subtotal: subtotal,
+        total: total,
+        units: units
+      }, status: :created
     else
       render json: { errors: @quotation.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
   def index
-    # Fetch quotations for import and export orders owned by the current user
     @quotations = Quotation.joins("LEFT JOIN import_orders ON import_orders.id = quotations.import_order_id")
                            .joins("LEFT JOIN export_orders ON export_orders.id = quotations.export_order_id")
                            .where("import_orders.user_id = ? OR export_orders.user_id = ?", @current_user.id, @current_user.id)
@@ -51,7 +57,6 @@ class QuotationsController < ApplicationController
   private
 
   def ensure_admin_user
-    # Check if the current user is an admin
     unless @current_user&.role == 'admin'
       render json: { error: 'Unauthorized access' }, status: :unauthorized
     end
@@ -60,20 +65,21 @@ class QuotationsController < ApplicationController
   def find_quotation
     @quotation = Quotation.find(params[:id])
   end
+  
   def ensure_user_owns_quotation
-    # Check if the current user owns the import or export order associated with the quotation
-    if (@quotation.import_order&.user == @current_user) || (@quotation.export_order&.user == @current_user)
+    if !(@quotation.import_order&.user == @current_user) && !(@quotation.export_order&.user == @current_user)
       render json: { error: 'Unauthorized access' }, status: :unauthorized
     end
   end
   
-  
   def calculate_total(total_price_per_unit, quotation)
     additional_fees = quotation.custom_clearance_fee.to_f + quotation.logistics_fee.to_f + quotation.warehouse_fee.to_f
-    total_before_commission = total_price_per_unit + additional_fees
-    company_commission = 0.05 * total_before_commission
+    subtotal = total_price_per_unit + additional_fees
+    company_commission = 0.05 * subtotal
     quotation.company_commission = company_commission
-    total_before_commission + company_commission
+    total = subtotal + company_commission
+    
+    [subtotal, total]
   end
   
 end
