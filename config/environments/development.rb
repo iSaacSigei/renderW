@@ -9,12 +9,12 @@ Rails.application.configure do
   config.enable_reloading = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.example.com',
+    address: 'smtp-mail.outlook.com',
     port: 587,
-    domain: 'example.com',
-    user_name: 'your_username',
-    password: 'your_password',
-    authentication: 'plain',
+    domain: 'outlook.com',
+    user_name: 'bettmo1209@outlook.com', # Your Outlook email
+    password: 'iForgot@321',           # Your Outlook email password
+    authentication: 'login',
     enable_starttls_auto: true
   }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }

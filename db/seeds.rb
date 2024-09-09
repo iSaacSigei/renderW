@@ -7,3 +7,19 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+puts 'Started Seedind Admin'
+User.create(
+  first_name: 'Admin',
+  last_name: 'User',
+  name: 'Admin Super',
+  email: 'kiplangatisack.is@gmail.com',
+  contact: '+1234567890',
+  address: '123 Admin Street',
+  city: 'Admin City',
+  state_province: 'Admin State',
+  password: '@123Admin', # Replace with a secure password
+  password_confirmation: '@123Admin', # Replace with a secure password
+  role: 'admin'
+)
+
+puts 'Done seeding'

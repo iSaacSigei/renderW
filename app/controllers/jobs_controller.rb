@@ -51,7 +51,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:job_title, :category, :job_description, :job_requirements, :application_deadline, :years_of_experience, :job_level, :location)
+    params.require(:job).permit(:job_title, :category, :job_description, :application_deadline, :years_of_experience, :job_level, :how_to_apply, :contact_email, :contact_phone, :location, requirements: [], benefits: [])
   end
 
   def ensure_admin_user
