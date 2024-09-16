@@ -117,7 +117,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.7.2)
-    jwt (1.5.6)
+    jwt (2.9.0)
+      base64
     language_server-protocol (3.17.0.3)
     logger (1.6.0)
     loofah (2.22.0)
@@ -294,7 +295,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
-  jwt (~> 1.5, >= 1.5.4)
+  jwt (~> 2.9)
   pg (~> 1.1)
   psych (~> 4.0)
   puma (>= 5.0)
