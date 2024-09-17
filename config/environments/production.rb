@@ -16,11 +16,13 @@ Rails.application.configure do
     address: ENV['SMTP_ADDRESS'],
     port: ENV['SMTP_PORT'],
     domain: ENV['SMTP_DOMAIN'],
-    user_name: ENV['SMTP_USER_NAME'],
+    user_name: ENV['SMTP_USERNAME'],
     password: ENV['SMTP_PASSWORD'],
     authentication: ENV['SMTP_AUTHENTICATION'],
-    enable_starttls_auto: true
+    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true',
+    helo: ENV['SMTP_HELO']
   }
+  
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
