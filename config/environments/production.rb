@@ -20,6 +20,8 @@ Rails.application.configure do
     password: ENV['SMTP_PASSWORD'],
     authentication: ENV['SMTP_AUTHENTICATION'],
     enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true',
+    open_timeout: 60,  # Adjust as needed
+  read_timeout: 60   # Adjust as needed
   }
   
   # Full error reports are disabled and caching is turned on.
