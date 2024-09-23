@@ -38,20 +38,21 @@ class TendersController < ApplicationController
     @tender.destroy
     render json: { message: 'Tender successfully deleted' }, status: :ok
   end
-  # PATCH /tenders/update_category
-  def update_category
-    old_category = params[:old_category]
-    new_category = params[:new_category]
+# PATCH /tenders/update_category
+def update_category
+  old_category = params[:old_category]
+  new_category = params[:new_category]
+  
+  # Update all tenders with the old category to the new category
+  updated_count = Tender.where(category: old_category).update_all(category: new_category)
 
-    # Find all tenders in the old category
-    tenders = Tender.where(category: old_category)
-
-    if tenders.update_all(category: new_category)
-      render json: { message: 'Category updated successfully', count: tenders.size }, status: :ok
-    else
-      render json: { error: 'Failed to update category' }, status: :unprocessable_entity
-    end
+  if updated_count > 0
+    render json: { message: 'Category updated successfully', count: updated_count }, status: :ok
+  else
+    render json: { error: 'Failed to update category' }, status: :unprocessable_entity
   end
+end
+
 
   private
 
