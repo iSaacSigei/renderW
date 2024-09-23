@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   resources :import_orders, only: [:create, :index, :show]
   resources :quotations, only: [:index, :create, :show]
   resources :contact_messages, only: [:create, :index]
+  resources :events
 end
