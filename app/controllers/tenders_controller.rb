@@ -1,6 +1,6 @@
 class TendersController < ApplicationController
-  before_action :authenticate_request!, only: [:create, :update, :destroy]
-  before_action :ensure_admin_user, only: [:create, :update, :destroy]
+  before_action :authenticate_request!, only: [:create, :update, :destroy,:update_category]
+  before_action :ensure_admin_user, only: [:create, :update, :destroy,:update_category]
   before_action :set_tender, only: [:show, :update, :destroy]
 
   # GET /tenders
@@ -38,6 +38,20 @@ class TendersController < ApplicationController
     @tender.destroy
     render json: { message: 'Tender successfully deleted' }, status: :ok
   end
+  # PATCH /tenders/update_category
+  def update_category
+    old_category = params[:old_category]
+    new_category = params[:new_category]
+
+    # Find all tenders in the old category
+    tenders = Tender.where(category: old_category)
+
+    if tenders.update_all(category: new_category)
+      render json: { message: 'Category updated successfully', count: tenders.size }, status: :ok
+    else
+      render json: { error: 'Failed to update category' }, status: :unprocessable_entity
+    end
+  end
 
   private
 
@@ -48,6 +62,11 @@ class TendersController < ApplicationController
   def tender_params
     params.require(:tender).permit(:tender_number, :company, :tender_fee, :application_deadline, :category, :tender_description)
   end
+  
+  def update_category_params
+    params.permit(:old_category, :new_category)
+  end
+  
 
   def ensure_admin_user
     render json: { error: 'Unauthorized access' }, status: :unauthorized unless @current_user.admin?
