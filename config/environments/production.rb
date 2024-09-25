@@ -16,17 +16,15 @@ Rails.application.configure do
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
     port: ENV.fetch('SMTP_PORT', 587).to_i,
     domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
-    user_name: ENV.fetch('SMTP_USERNAME'),
-    password: ENV.fetch('SMTP_PASSWORD'),
-    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,
+    user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'),  # Replace with your actual username
+    password: ENV.fetch('SMTP_PASSWORD'),  # Ensure this is correct
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,  # 'plain' is more common than 'login'
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, # Temporarily for debugging (not recommended for production)
-    debug_output: $stdout, # Output SMTP debug information to console/log
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, # Temporarily for debugging
+    debug_output: $stdout,
     ssl: false,
     tls: false,
-    open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
-    read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: 'womall.africa'  # Use your domain here instead of mail.womall.africa if needed
+    helo: 'womall.africa'  # Should be your domain
   }
   
   
