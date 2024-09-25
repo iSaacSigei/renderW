@@ -13,18 +13,20 @@ Rails.application.configure do
   config.eager_load = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_ADDRESS'],         # mail.womall.africa (HostAfrica server)
-    port: ENV['SMTP_PORT'],               # 587 or 465
+    address: ENV['SMTP_ADDRESS'],         # mail.womall.africa
+    port: 465,                            # SSL port
     domain: ENV['SMTP_DOMAIN'],           # womall.africa
     user_name: ENV['SMTP_USERNAME'],      # admin@womall.africa
     password: ENV['SMTP_PASSWORD'],       # Password for SMTP
     authentication: ENV['SMTP_AUTHENTICATION'],  # login
-    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true', # true
+    ssl: true,
+    enable_starttls_auto: false,          # Disable STARTTLS, as you're using SSL
     open_timeout: 60,
     read_timeout: 60,
-    helo: 'mail.womall.africa'            # Explicitly set the HELO domain
+    helo: 'mail.womall.africa'
   }
   
+
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
