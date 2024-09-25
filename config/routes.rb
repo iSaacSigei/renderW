@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :export_orders, only: [:create, :index, :show]
   resources :import_orders, only: [:create, :index, :show]
   resources :quotations, only: [:index, :create, :show]
-  resources :contact_messages, only: [:create, :index]
+  resources :contact_messages, only: [:create, :index, :destroy]
   resources :events
 end
