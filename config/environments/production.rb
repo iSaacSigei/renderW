@@ -10,15 +10,14 @@ Rails.application.configure do
   # SMTP settings for Action Mailer.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
-    port: ENV.fetch('SMTP_PORT', 587).to_i,
-    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
-    user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'),
-    password: ENV.fetch('SMTP_PASSWORD'),
-    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,
-    enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,
-    helo_domain: 'womall.africa',
+    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'), # SMTP server address
+    port: ENV.fetch('SMTP_PORT', 587).to_i,                   # SMTP port (TLS)
+    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),         # Domain used in HELO command
+    user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'),  # SMTP user
+    password: ENV.fetch('SMTP_PASSWORD'),                          # SMTP password
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym, # Authentication method
+    enable_starttls_auto: true,                                  # Ensure TLS is enabled
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER               # SSL verification
   }
   
   # Full error reports are disabled and caching is turned on.
@@ -62,6 +61,8 @@ Rails.application.configure do
 
   # Disable deprecation reporting in production.
   config.active_support.report_deprecations = false
+
+  # ActionMailer URL Options
   config.action_mailer.default_url_options = { host: 'womall.africa', protocol: 'https' }
 
   # Enable DNS rebinding protection (uncomment if necessary).
