@@ -26,7 +26,7 @@ Rails.application.configure do
     tls: false,
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: 'mail.womall.africa'  # Change this line
+    helo: 'womall.africa'  # Use your domain here instead of mail.womall.africa if needed
   }
   
   
