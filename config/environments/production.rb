@@ -13,18 +13,19 @@ Rails.application.configure do
   config.eager_load = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),  # Default to 'mail.example.com' if not set
-    port: ENV.fetch('SMTP_PORT', 465).to_i,                  # Default to 465 (SSL port)
-    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),          # Default to 'example.com'
-    user_name: ENV.fetch('SMTP_USERNAME'),                    # Fetch SMTP username from ENV
-    password: ENV.fetch('SMTP_PASSWORD'),                     # Fetch SMTP password from ENV
-    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,  # Default to :login
-    ssl: ENV.fetch('SMTP_SSL', 'true') == 'true',             # Default to true for SSL
-    enable_starttls_auto: ENV.fetch('SMTP_STARTTLS', 'false') == 'true', # Default to false (using SSL)
-    open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,     # Timeout settings
-    read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa'),          # Default HELO domain
-    verify_mode: ENV.fetch('SMTP_VERIFY_MODE', 'peer').upcase == 'NONE' ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
+    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),  # SMTP server address
+    port: ENV.fetch('SMTP_PORT', 465).to_i,                    # SSL port
+    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),          # HELO domain
+    user_name: ENV.fetch('SMTP_USERNAME'),                      # SMTP authentication username
+    password: ENV.fetch('SMTP_PASSWORD'),                       # SMTP authentication password
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,  # :login or :plain
+    ssl: ENV.fetch('SMTP_SSL', 'true') == 'true',               # Use SSL
+    tls: ENV.fetch('SMTP_TLS', 'true') == 'true',               # Use TLS if supported
+    enable_starttls_auto: ENV.fetch('SMTP_STARTTLS', 'false') == 'true', # Default to false
+    open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,      # Connection timeout
+    read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,      # Read timeout
+    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa'),         # HELO domain
+    verify_mode: OpenSSL::SSL::VERIFY_NONE                      # Temporarily disable SSL verification for debugging
   }
   
   # Full error reports are disabled and caching is turned on.
