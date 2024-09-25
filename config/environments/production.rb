@@ -13,20 +13,20 @@ Rails.application.configure do
   config.eager_load = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_ADDRESS'],         # mail.womall.africa
-    port: 465,                            # SSL port
-    domain: ENV['SMTP_DOMAIN'],           # womall.africa
-    user_name: ENV['SMTP_USERNAME'],      # admin@womall.africa
-    password: ENV['SMTP_PASSWORD'],       # Password for SMTP
-    authentication: ENV['SMTP_AUTHENTICATION'],  # login
-    ssl: true,
-    enable_starttls_auto: false,          # Disable STARTTLS, as you're using SSL
-    open_timeout: 60,
-    read_timeout: 60,
-    helo: 'mail.womall.africa'
+    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),  # Default to 'mail.example.com' if not set
+    port: ENV.fetch('SMTP_PORT', 465).to_i,                  # Default to 465 (SSL port)
+    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),          # Default to 'example.com'
+    user_name: ENV.fetch('SMTP_USERNAME'),                    # Fetch SMTP username from ENV
+    password: ENV.fetch('SMTP_PASSWORD'),                     # Fetch SMTP password from ENV
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,  # Default to :login
+    ssl: ENV.fetch('SMTP_SSL', 'true') == 'true',             # Default to true for SSL
+    enable_starttls_auto: ENV.fetch('SMTP_STARTTLS', 'false') == 'true', # Default to false (using SSL)
+    open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,     # Timeout settings
+    read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
+    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa'),          # Default HELO domain
+    verify_mode: ENV.fetch('SMTP_VERIFY_MODE', 'peer').upcase == 'NONE' ? OpenSSL::SSL::VERIFY_NONE : OpenSSL::SSL::VERIFY_PEER
   }
   
-
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
