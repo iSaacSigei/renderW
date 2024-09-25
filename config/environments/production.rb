@@ -14,17 +14,18 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
-    port: 465,
+    port: ENV.fetch('SMTP_PORT', 587).to_i,
     domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
     user_name: ENV.fetch('SMTP_USERNAME'),
     password: ENV.fetch('SMTP_PASSWORD'),
-    authentication: :login,
-    ssl: true,
-    enable_starttls_auto: false,
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,
+    enable_starttls_auto: true,
     openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,
+    ssl: false,
+    tls: false,
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: 'mail.womall.africa'
+    helo: 'womall.africa'  # Change this line
   }
   
   
