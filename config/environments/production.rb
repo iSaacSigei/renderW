@@ -14,19 +14,20 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),  # SMTP server address
-    port: ENV.fetch('SMTP_PORT', 465).to_i,                    # SSL port
+    port: ENV.fetch('SMTP_PORT', 587).to_i,                    # Updated to TLS port (587)
     domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),          # HELO domain
     user_name: ENV.fetch('SMTP_USERNAME'),                      # SMTP authentication username
     password: ENV.fetch('SMTP_PASSWORD'),                       # SMTP authentication password
-    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,  # :login or :plain
-    ssl: ENV.fetch('SMTP_SSL', 'true') == 'true',               # Use SSL
-    tls: ENV.fetch('SMTP_TLS', 'true') == 'true',               # Use TLS if supported
-    enable_starttls_auto: ENV.fetch('SMTP_STARTTLS', 'false') == 'true', # Default to false
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,  # Typically 'plain' for TLS
+    ssl: false,                                                  # Set to false for TLS
+    tls: true,                                                  # Enable TLS
+    enable_starttls_auto: true,                                # Automatically use STARTTLS
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,      # Connection timeout
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,      # Read timeout
     helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa'),         # HELO domain
-    verify_mode: OpenSSL::SSL::VERIFY_NONE                      # Temporarily disable SSL verification for debugging
+    verify_mode: OpenSSL::SSL::VERIFY_PEER                      # Enable SSL verification
   }
+  
   
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
