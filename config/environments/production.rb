@@ -20,12 +20,13 @@ Rails.application.configure do
     password: ENV.fetch('SMTP_PASSWORD'),
     authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, # Temporarily for debugging (not recommended for production)
+    debug_output: $stdout, # Output SMTP debug information to console/log
     ssl: false,
     tls: false,
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: 'womall.africa'  # Change this line
+    helo: 'mail.womall.africa'  # Change this line
   }
   
   
