@@ -13,15 +13,16 @@ Rails.application.configure do
   config.eager_load = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_ADDRESS'],
-    port: ENV['SMTP_PORT'],
-    domain: ENV['SMTP_DOMAIN'],
-    user_name: ENV['SMTP_USERNAME'],
-    password: ENV['SMTP_PASSWORD'],
-    authentication: ENV['SMTP_AUTHENTICATION'],
-    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true',
-    open_timeout: 60,  # Adjust as needed
-  read_timeout: 60   # Adjust as needed
+    address: ENV['SMTP_ADDRESS'],         # mail.womall.africa (HostAfrica server)
+    port: ENV['SMTP_PORT'],               # 587 or 465
+    domain: ENV['SMTP_DOMAIN'],           # womall.africa
+    user_name: ENV['SMTP_USERNAME'],      # admin@womall.africa
+    password: ENV['SMTP_PASSWORD'],       # Password for SMTP
+    authentication: ENV['SMTP_AUTHENTICATION'],  # login
+    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true', # true
+    open_timeout: 60,
+    read_timeout: 60,
+    helo: 'mail.womall.africa'            # Explicitly set the HELO domain
   }
   
   # Full error reports are disabled and caching is turned on.
