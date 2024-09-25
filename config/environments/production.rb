@@ -25,7 +25,7 @@ Rails.application.configure do
     tls: false,                                                # Keep TLS disabled
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa')
+    helo: 'mail.womall.africa'
   }
   
   
