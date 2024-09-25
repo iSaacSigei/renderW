@@ -14,20 +14,19 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
-    port: ENV.fetch('SMTP_PORT', 587).to_i,                     # Change to 587 for STARTTLS
+    port: ENV.fetch('SMTP_PORT', 587).to_i,
     domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
     user_name: ENV.fetch('SMTP_USERNAME'),
     password: ENV.fetch('SMTP_PASSWORD'),
     authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,
-    enable_starttls_auto: true,                                  # Enable STARTTLS
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,            # Ensure peer verification
-    ssl: false,                                                 # Disable SSL since we're using STARTTLS
-    tls: false,                                                # Keep TLS disabled
+    enable_starttls_auto: true,
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,
+    ssl: false,
+    tls: false,
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
     helo: 'mail.womall.africa'
   }
-  
   
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
