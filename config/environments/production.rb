@@ -18,7 +18,7 @@ Rails.application.configure do
     authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,
     enable_starttls_auto: true,
     openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,
-    helo: 'womall.africa',
+    helo_domain: 'womall.africa',
   }
   
   # Full error reports are disabled and caching is turned on.
