@@ -14,18 +14,18 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
-    port: ENV.fetch('SMTP_PORT', 465).to_i,                     # Switch back to SSL port
+    port: ENV.fetch('SMTP_PORT', 587).to_i,                     # Change to 587 for STARTTLS
     domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
     user_name: ENV.fetch('SMTP_USERNAME'),
     password: ENV.fetch('SMTP_PASSWORD'),
-    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,  # 'login' for SSL
-    ssl: true,                                                  # Enable SSL
-    tls: false,                                                # Disable TLS
-    enable_starttls_auto: false,                               # Disable STARTTLS
+    authentication: ENV.fetch('SMTP_AUTHENTICATION', 'login').to_sym,
+    enable_starttls_auto: true,                                  # Enable STARTTLS
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER,            # Ensure peer verification
+    ssl: false,                                                 # Disable SSL since we're using STARTTLS
+    tls: false,                                                # Keep TLS disabled
     open_timeout: ENV.fetch('SMTP_OPEN_TIMEOUT', 60).to_i,
     read_timeout: ENV.fetch('SMTP_READ_TIMEOUT', 60).to_i,
-    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa'),
-    verify_mode: OpenSSL::SSL::VERIFY_PEER
+    helo: ENV.fetch('SMTP_HELO', 'mail.womall.africa')
   }
   
   
