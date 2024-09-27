@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
-  before_action :authenticate_request!, only: [:index, :update, :destroy]
-  before_action :authorize_admin, only: [:index, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :update_profile, :update_password, :destroy]
+  before_action :authenticate_request!, only: [:index, :update_profile, :update_password, :destroy]
+  before_action :authorize_admin, only: [:index, :destroy]
 
   # POST /users
   def create
@@ -19,13 +19,23 @@ class UsersController < ApplicationController
     render json: @users
   end
 
-  # PUT /users/:id
-  def update
+  # PATCH /users/:id/update_profile
+  def update_profile
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update(profile_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH /users/:id/update_password
+  def update_password
+    @user = User.find(params[:id])
+    if @user.authenticate(params[:current_password]) && @user.update(password_params)
+      render json: { message: 'Password updated successfully' }
+    else
+      render json: { errors: ['Invalid current password or update failed'] }, status: :unprocessable_entity
     end
   end
 
@@ -45,7 +55,11 @@ class UsersController < ApplicationController
     params.require(:user).permit(:first_name, :last_name, :name, :email, :contact, :address, :city, :state_province, :password, :password_confirmation, :role)
   end
 
-  def authorize_admin
-    render json: { error: 'Access denied' }, status: :forbidden unless @current_user.role == 'admin'
+  def profile_params
+    params.require(:user).permit(:first_name, :last_name, :name, :contact, :address, :city, :state_province)
+  end
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end
