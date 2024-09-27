@@ -4,18 +4,18 @@ Rails.application.routes.draw do
       patch 'update_category'
     end
   end
-
   resources :jobs, only: [:index, :show, :create, :update, :destroy]
-  
   post '/signup', to: 'users#create'
-  post '/login', to: 'sessions#login'
-  get '/user', to: 'sessions#show'
-  get '/users/profile', to: 'users#show_profile'
-
-  resources :users, only: [:create, :destroy, :index] do
+  post 'login', to: 'sessions#login'
+  get 'user', to: 'sessions#show'
+  
+  # Existing users resource route
+  resources :users, only: [:index, :update, :destroy] do
+    # New routes for user profile and password management
     member do
-      patch 'update_profile'
-      patch 'update_password'
+      get 'profile'          # For getting user profile
+      patch 'update_profile' # For updating user profile
+      patch 'update_password' # For updating user password
     end
   end
   
