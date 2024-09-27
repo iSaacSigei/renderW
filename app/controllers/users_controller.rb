@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :update_profile, :update_password, :destroy]
-  before_action :authenticate_request!, only: [:index, :update_profile, :update_password, :destroy]
+  before_action :authenticate_request!, only: [:index, :update_profile, :update_password, :destroy, :show_profile]
   before_action :authorize_admin, only: [:index, :destroy]
 
   # POST /users
@@ -17,6 +17,11 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     render json: @users
+  end
+  
+  # GET /users/profile
+  def show_profile
+    render json: @current_user
   end
 
   # PATCH /users/:id/update_profile

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   post '/login', to: 'sessions#login'
   get '/user', to: 'sessions#show'
+  get '/users/profile', to: 'users#show_profile'
 
   resources :users, only: [:create, :destroy, :index] do
     member do
