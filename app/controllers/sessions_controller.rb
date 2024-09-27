@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       token = user.generate_token
       render json: { 
         token: token, 
-        user: user.slice(:id, :email, :first_name, :role) 
+        user: user.slice(:id, :email, :first_name, :last_name, :name, :contact, :address, :city, :state_province, :role) 
       }, status: :ok
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
@@ -22,7 +22,8 @@ class SessionsController < ApplicationController
         user_id = decoded_token[0]['user_id']
         user = User.find_by(id: user_id)
         if user
-          render json: { user: user.slice(:id, :email, :first_name, :role) }, status: :ok
+          # Return the desired user fields, omitting sensitive ones
+          render json: { user: user.slice(:id, :email, :first_name, :name, :last_name, :contact, :address, :city, :state_province, :role) }, status: :ok
         else
           render json: { error: 'User not found' }, status: :unauthorized
         end
