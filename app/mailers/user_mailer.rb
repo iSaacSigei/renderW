@@ -3,8 +3,8 @@ class UserMailer < ApplicationMailer
   
     def welcome_email(user)
       @user = user
-      @url  = 'https://womall.africa/login'  # Link to login page or any relevant page
-      mail(to: @user.email, subject: 'Welcome to Womall!')
+      @url  = 'https://womall.africa/login'
+      mail(to: @user.email, subject: 'Welcome to WoMall!')
     end
-  end
+end
   
