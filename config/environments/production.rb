@@ -17,8 +17,11 @@ Rails.application.configure do
     password: 'SerldN5oocDL',
     authentication: :login,
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE  # Disable SSL verification
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE  # Temporary SSL verification disable
   }
+  
+  config.action_mailer.default_options = { from: 'admin@womall.africa' }
+  
   
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
