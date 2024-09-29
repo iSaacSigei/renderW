@@ -12,12 +12,12 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'mail.womall.africa',
     port: 587,
-    domain: 'mail.womall.africa',  # Set this to mail.womall.africa
+    domain: 'mail.womall.africa',
     user_name: 'admin@womall.africa',
     password: 'SerldN5oocDL',
     authentication: :login,
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE  # Disable SSL verification
   }
   
   # Full error reports are disabled and caching is turned on.
