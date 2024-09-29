@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'user', to: 'sessions#show'
   
   # Existing users resource route
-  resources :users, only: [:index, :update, :destroy] do
+  resources :users, only: [:index, :create, :update, :destroy] do
     # New routes for user profile and password management
     member do
       get 'profile'          # For getting user profile
