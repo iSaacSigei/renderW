@@ -12,14 +12,14 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
     port: ENV.fetch('SMTP_PORT', 587).to_i,
-    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),
+    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),  # Change to root domain
     user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'),
     password: ENV.fetch('SMTP_PASSWORD'),
     authentication: :login,
     enable_starttls_auto: true,
     openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER
   }
-  
+    
   config.action_mailer.default_options = { from: ENV.fetch('SMTP_DEFAULT_FROM', 'admin@womall.africa') }
   
   
