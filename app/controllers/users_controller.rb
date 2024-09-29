@@ -3,17 +3,17 @@ class UsersController < ApplicationController
   before_action :authenticate_request!, only: [:index, :update, :destroy, :profile]
   before_action :authorize_admin, only: [:index, :update, :destroy]
 
-  # POST /users
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      Rails.logger.info "Sending welcome email to: #{@user.email}"
-      UserMailer.welcome_email(@user).deliver_now
-      render json: @user, status: :created
-    else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-    end
+# POST /users
+def create
+  @user = User.new(user_params)
+  if @user.save
+    Rails.logger.info "Sending welcome email to: #{@user.email}"
+    UserMailer.welcome_email(@user).deliver_later  # Use deliver_later for async delivery
+    render json: @user, status: :created
+  else
+    render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
   end
+end
   
   # GET /users
   def index
