@@ -10,17 +10,17 @@ Rails.application.configure do
   # SMTP settings for Action Mailer.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),
-    port: ENV.fetch('SMTP_PORT', 587).to_i,
-    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),  # Change to root domain
-    user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'),
-    password: ENV.fetch('SMTP_PASSWORD'),
+    address: 'mail.womall.africa',
+    port: 587,
+    domain: 'mail.womall.africa',
+    user_name: 'admin@womall.africa',
+    password: 'SerldN5oocDL',
     authentication: :login,
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE  # Temporary SSL verification disable
   }
-    
-  config.action_mailer.default_options = { from: ENV.fetch('SMTP_DEFAULT_FROM', 'admin@womall.africa') }
+  
+  config.action_mailer.default_options = { from: 'admin@womall.africa' }
   
   
   # Full error reports are disabled and caching is turned on.
