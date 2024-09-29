@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Womall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .header {
+            background: #18453B;
+            background: -webkit-linear-gradient(to right, #18453B, #00AB66);
+            background: linear-gradient(to right, #18453B, #00AB66);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            font-size: 0.9em;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .checkmark {
+            color: green; /* Color of the checkmark */
+            margin-right: 5px; /* Space between the checkmark and text */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to Womall!</h1>
+    </div>
+    <div class="container">
+        <p>Dear <%= @user.name %>,</p>
+
+        <p>At WoMall, we're dedicated to simplifying international trade. Whether you're importing, exporting, or sourcing quality products, we provide end-to-end management solutions and expert support to streamline your business.</p>
+
+        <p>As a member, you will enjoy:</p>
+        <ul>
+            <li><span class="checkmark">✓</span>Access to verified suppliers and manufacturers.</li>
+            <li><span class="checkmark">✓</span>Efficient logistics and warehousing services.</li>
+            <li><span class="checkmark">✓</span>Expert guidance on global trade.</li>
+        </ul>
+
+        <p>Feel free to explore our platform and kick-start your journey at <a href="https://www.womall.africa/">Womall</a>. Don't hesitate to reach out if you need assistance. We're here to help.</p>
+
+        <p>Best Regards,<br>The WoMall Africa Team</p>
+    </div>
+</body>
+</html>
