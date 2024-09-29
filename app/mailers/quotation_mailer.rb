@@ -1,4 +1,7 @@
 class QuotationMailer < ApplicationMailer
+  default from: 'WoMall <admin@womall.africa>', 
+  reply_to: 'admin@womall.africa'
+
   def send_quotation(quotation)
     @quotation = quotation
     @order = @quotation.import_order || @quotation.export_order

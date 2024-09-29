@@ -1,4 +1,7 @@
 class UserMailer < ApplicationMailer
+    default from: 'WoMall <admin@womall.africa>', 
+    reply_to: 'admin@womall.africa'
+
     def welcome_email(user)
       @user = user
       @url  = 'https://womall.africa/login'
