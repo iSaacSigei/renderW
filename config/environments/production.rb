@@ -10,14 +10,14 @@ Rails.application.configure do
   # SMTP settings for Action Mailer.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_ADDRESS', 'mail.womall.africa'),  # SMTP server address
-    port: ENV.fetch('SMTP_PORT', 587).to_i,                    # SMTP port (TLS)
-    domain: ENV.fetch('SMTP_DOMAIN', 'womall.africa'),          # Domain used in HELO command
-    user_name: ENV.fetch('SMTP_USERNAME', 'admin@womall.africa'), # SMTP user
-    password: ENV.fetch('SMTP_PASSWORD'),                         # SMTP password
-    authentication: :login,                                       # Authentication method
-    enable_starttls_auto: true,                                   # Ensure TLS is enabled
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER                # SSL verification
+    address: 'mail.womall.africa',
+    port: 587,
+    domain: 'mail.womall.africa',  # Set this to mail.womall.africa
+    user_name: 'admin@womall.africa',
+    password: 'SerldN5oocDL',
+    authentication: :login,
+    enable_starttls_auto: true,
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_PEER
   }
   
   # Full error reports are disabled and caching is turned on.
