@@ -23,7 +23,8 @@ gem 'psych', '~> 4.0'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 gem 'rack-cors'
-
+gem 'mail'
+gem 'actionmailer' # Update the version to match your Rails version
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 gem 'jwt', '~> 1.5', '>= 1.5.4'
