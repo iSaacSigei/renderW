@@ -153,8 +153,8 @@ GEM
     parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.8)
-    pg (1.5.8-x86-mingw32)
+    pg (1.5.9)
+    pg (1.5.9-x86-mingw32)
     psych (4.0.6)
       stringio
     public_suffix (6.0.1)
@@ -294,7 +294,7 @@ DEPENDENCIES
   jbuilder
   jwt (~> 1.5, >= 1.5.4)
   mail
-  pg (~> 1.1)
+  pg (~> 1.5)
   psych (~> 4.0)
   puma (>= 5.0)
   rack-cors
